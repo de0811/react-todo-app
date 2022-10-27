@@ -1,4 +1,5 @@
 import React from "react";
+import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import "./App.css";
 import TodoInject from "./components/TodoInject";
 import TodoItem from "./components/TodoItem";
@@ -34,7 +35,6 @@ const App = () => {
   };
 
   const handleCompletedChange = (event, id) => {
-    console.log(todos);
     // setTodos 를 하지 않으면 re-rendering이 되지 않는걸 확인
     // 즉 list 인스턴스들을 수정을 하고 set을 해줘야만 re-rendering이 되는 것
     setTodos((prev) => {
@@ -47,27 +47,30 @@ const App = () => {
   };
 
   return (
-    <div className="container">
-      <div className="todoBlock">
-        <div className="title">
+    <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
+      <div className="w-full p-5 m-4 bg-white rounded shadow lg:w-3/4">
+        <div className="flex justify-between mb-1">
           <h1>할 일 목록</h1>
-          <h1 className="text-3xl font-bold underline">Hello world!</h1>
         </div>
         <div className="todoInput">
           <TodoInject handleInjectTodoTxtClick={handleInjectTodoTxtClick} />
         </div>
 
         <div className="todos">
-          {todos.map((todo) => {
-            return (
-              <TodoItem
-                key={todo.id}
-                todo={todo}
-                handleCompletedChange={handleCompletedChange}
-                handleDeleteClick={handleDeleteClick}
-              />
-            );
-          })}
+          <DragDropContext>
+            {todos.map((todo, index) => {
+              return (
+                <Draggable>
+                  <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    handleCompletedChange={handleCompletedChange}
+                    handleDeleteClick={handleDeleteClick}
+                  />
+                </Draggable>
+              );
+            })}
+          </DragDropContext>
         </div>
       </div>
     </div>
