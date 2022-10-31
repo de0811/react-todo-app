@@ -1,6 +1,7 @@
 import React from "react";
 
 const TodoInject = ({ handleInjectTodoTxtClick }) => {
+  console.log("TodoInject Run");
   const [injectTodoTxt, setInjectTodoTxt] = React.useState("");
 
   const handleInjectTodoTxtChange = (event) => {
@@ -32,4 +33,4 @@ const TodoInject = ({ handleInjectTodoTxtClick }) => {
   );
 };
 
-export default TodoInject;
+export default React.memo(TodoInject);
